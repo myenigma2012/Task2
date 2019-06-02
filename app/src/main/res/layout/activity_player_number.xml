@@ -28,39 +28,48 @@
 
     <Button
         android:id="@+id/singleplayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="SINGLE PLAYER"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.99"
-        tools:layout_editor_absoluteX="54dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.675" />
 
     <Button
         android:id="@+id/twoplayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="TWO PLAYERS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.3"
-        tools:layout_editor_absoluteX="240dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681" />
 
     <Button
         android:id="@+id/next"
-        textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="121dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="NEXT"
+        android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/twoplayer"
-        app:layout_constraintVertical_bias="0.528"
-        tools:layout_editor_absoluteX="205dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.878" />
 </android.support.constraint.ConstraintLayout>

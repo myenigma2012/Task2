@@ -6,34 +6,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class PlayerColour extends AppCompatActivity implements View.OnClickListener {
+public class PlayerColour extends AppCompatActivity {
 
+    View view;
     String p2colour ;
     String p1colour;
     int n =1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_colour);
-    }
-     Button whiteBtn =(Button) findViewById(R.id.wBtn);
-    Button greenBtn =(Button) findViewById(R.id.gBtn);
-    Button blueBtn =(Button) findViewById(R.id.bBtn);
-    Button redBtn =(Button) findViewById(R.id.rBtn);
-    Button playBtn = (Button) findViewById(R.id.playBtn);
-    TextView name = (TextView) findViewById(R.id.name);
 
+    final Button whiteBtn =(Button) findViewById(R.id.wBtn);
+    final Button greenBtn =(Button) findViewById(R.id.gBtn);
+    final Button blueBtn =(Button) findViewById(R.id.bBtn);
+    final Button redBtn =(Button) findViewById(R.id.rBtn);
+    final Button playBtn = (Button) findViewById(R.id.playBtn);
+    final TextView name = (TextView) findViewById(R.id.name);
 
+        playBtn.setVisibility(View.GONE);
 
-public void playerName(){
-                    name.setText("Player 2");
-                    }
-
-    @Override
-    public void onClick(View v) {
-         whiteBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View v){
+         whiteBtn.setOnClickListener(new View.OnClickListener(){
+             public void onClick (View v){
                 if (n == 1){
                      p1colour = "white";
                 }
@@ -41,8 +38,14 @@ public void playerName(){
                      p2colour = "white";
                 }
                 n++;
-                playerName();
+                 name.setText("Player 2");
                 whiteBtn.setVisibility(v.INVISIBLE);
+                 if (n>2){
+                     playBtn.setVisibility(View.VISIBLE);
+                     redBtn.setVisibility(View.INVISIBLE);
+                     greenBtn.setVisibility(View.INVISIBLE);
+                     blueBtn.setVisibility(View.INVISIBLE);
+                 }
             }
         });
         blueBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +57,14 @@ public void playerName(){
                      p2colour = "blue";
                 }
                 n++;
-                playerName();
+                name.setText("Player 2");
                 blueBtn.setVisibility(v.INVISIBLE);
+                if (n>2){
+                    playBtn.setVisibility(View.VISIBLE);
+                    whiteBtn.setVisibility(View.INVISIBLE);
+                    greenBtn.setVisibility(View.INVISIBLE);
+                    redBtn.setVisibility(View.INVISIBLE);
+                }
             }
         });
         greenBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +76,14 @@ public void playerName(){
                     p2colour = "green";
                 }
                 n++;
-                playerName();
+                name.setText("Player 2");
                 greenBtn.setVisibility(v.INVISIBLE);
+                if (n>2){
+                    playBtn.setVisibility(View.VISIBLE);
+                    whiteBtn.setVisibility(View.INVISIBLE);
+                    redBtn.setVisibility(View.INVISIBLE);
+                    blueBtn.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -81,8 +96,14 @@ public void playerName(){
                     p2colour = "red";
                 }
                 n++;
-                playerName();
+                name.setText("Player 2");
                 redBtn.setVisibility(v.INVISIBLE);
+                if (n>2){
+                    playBtn.setVisibility(View.VISIBLE);
+                    whiteBtn.setVisibility(View.INVISIBLE);
+                    greenBtn.setVisibility(View.INVISIBLE);
+                    blueBtn.setVisibility(View.INVISIBLE);
+                }
             }
         });
         playBtn.setOnClickListener( new View.OnClickListener(){
@@ -93,14 +114,9 @@ public void playerName(){
                 intent.putExtra( "col2", p2colour);
                 startActivity(intent);
             }
-
-
         });
 
 
-        if (p2colour !=  "") {
-        playBtn.setVisibility(v.VISIBLE);
-        }
     }
 
 }
