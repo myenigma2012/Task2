@@ -5,6 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#C8E91E63"
-    tools:context=".homeScreen">
-
-</android.support.constraint.ConstraintLayout>
+    tools:context=".homeScreen"/>

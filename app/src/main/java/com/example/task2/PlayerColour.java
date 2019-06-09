@@ -1,6 +1,7 @@
 package com.example.task2;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +12,17 @@ import android.widget.Toast;
 public class PlayerColour extends AppCompatActivity {
 
     View view;
-    String p2colour ;
-    String p1colour;
+    int p2colour ;
+    int p1colour;
     int n =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_colour);
+        //getting intents
+        Intent intename =getIntent();
+        final int playerNum = (int) intename.getIntExtra("player",0 );
 
     final Button whiteBtn =(Button) findViewById(R.id.wBtn);
     final Button greenBtn =(Button) findViewById(R.id.gBtn);
@@ -29,16 +33,18 @@ public class PlayerColour extends AppCompatActivity {
 
         playBtn.setVisibility(View.GONE);
 
+
          whiteBtn.setOnClickListener(new View.OnClickListener(){
              public void onClick (View v){
                 if (n == 1){
-                     p1colour = "white";
+                     p1colour = 1;
                 }
                 else {
-                     p2colour = "white";
+                     p2colour = 1;
                 }
                 n++;
-                 name.setText("Player 2");
+                if ( playerNum ==2){
+                name.setText("Player 2");}
                 whiteBtn.setVisibility(v.INVISIBLE);
                  if (n>2){
                      playBtn.setVisibility(View.VISIBLE);
@@ -51,13 +57,14 @@ public class PlayerColour extends AppCompatActivity {
         blueBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                     p1colour = "blue";
+                     p1colour = 2;
                 }
                 else {
-                     p2colour = "blue";
+                     p2colour = 2;
                 }
                 n++;
-                name.setText("Player 2");
+                if ( playerNum ==2){
+                    name.setText("Player 2");}
                 blueBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
@@ -70,13 +77,14 @@ public class PlayerColour extends AppCompatActivity {
         greenBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                    p1colour = "green";
+                    p1colour = 3;
                 }
                 else {
-                    p2colour = "green";
+                    p2colour = 3;
                 }
                 n++;
-                name.setText("Player 2");
+                if ( playerNum ==2){
+                    name.setText("Player 2");}
                 greenBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
@@ -90,13 +98,14 @@ public class PlayerColour extends AppCompatActivity {
         redBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                    p1colour = "red";
+                    p1colour = 4;
                 }
                 else {
-                    p2colour = "red";
+                    p2colour = 4;
                 }
                 n++;
-                name.setText("Player 2");
+                if ( playerNum ==2){
+                    name.setText("Player 2");}
                 redBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
@@ -112,6 +121,7 @@ public class PlayerColour extends AppCompatActivity {
                 Intent intent = new Intent ( PlayerColour.this, homeScreen.class);
                 intent.putExtra( "col1", p1colour);
                 intent.putExtra( "col2", p2colour);
+                intent.putExtra("mode", playerNum);
                 startActivity(intent);
             }
         });

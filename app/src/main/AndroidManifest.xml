@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlayerColour"></activity>
-        <activity android:name=".PlayerNumber" />fr
-        <activity android:name=".homeScreen" />
-        <activity android:name=".Splash">
+        <activity android:name=".PlayerColour"/>
+        <activity android:name=".PlayerNumber" />
+        <activity android:name=".Splash"/>
+        <activity android:name=".homeScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
