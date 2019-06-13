@@ -1,25 +1,18 @@
 package com.example.task2;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Canvas;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.MotionEvent;
-
-import java.lang.reflect.Array;
-
 import static android.view.MotionEvent.*;
 
 public class MyCanvas extends View {
-    Paint paintRect, paintCircle, paintToken, canvasPaint;
-    Path pathRect;
-    Bitmap canvasBitmap;
-    Canvas drawCanvas;
+    Paint paintRect, paintCircle;
+    Token drawToken;
     int height;
     int width;
     int count = 0;
@@ -27,10 +20,8 @@ public class MyCanvas extends View {
     int y = 0;
     boolean touched;
     float tokenX = 90, tokenY = 90;
-    int arrX[][] = new int[6][7];
-    int arrY[][] = new int[6][7];
-    Pair<int[][], int[][]> cood = new Pair<int[][], int[][]>(arrX, arrY);
     private static final String TAG = "message";
+    Pair<Integer, Integer>[] coord = new Pair[42];
 
 
     public MyCanvas(Context context, AttributeSet attrs, int screenHeight, int screenWidth) {
@@ -40,23 +31,15 @@ public class MyCanvas extends View {
         paintCircle.setStyle(Paint.Style.FILL_AND_STROKE);
         paintCircle.setStrokeWidth(5f);
         paintCircle.setColor(Color.WHITE);
-        //grid border
-        pathRect = new Path();
         //grid
         paintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintRect.setStyle(Paint.Style.FILL);
         paintRect.setColor(Color.BLUE);
         paintRect.setStyle(Paint.Style.FILL_AND_STROKE);
-        //tokens
-        paintToken = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintToken.setStyle(Paint.Style.FILL);
-        paintToken.setColor(Color.GREEN);
 
-        canvasPaint = new Paint();
         height = screenHeight;
         width = screenWidth;
+        drawToken = new Token();
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -64,22 +47,9 @@ public class MyCanvas extends View {
         //getting the touched x and y position
         float xPos = event.getX();
         float yPos = event.getY();
-        switch (event.getAction()) {
-            case ACTION_DOWN:
-                break;
-
-            case ACTION_MOVE:
-                break;
-            case ACTION_UP:
-                tokenX = xPos;
-                tokenY = yPos;
-                invalidate();
-                break;
-            default:
-                return true;
-
-        }
-
+        tokenX = xPos;
+        tokenY = yPos;
+        invalidate();
         return false;
     }
 
@@ -89,7 +59,7 @@ public class MyCanvas extends View {
         //outline for grid
         int padding = 30;
         int gridTop = height / 3;
-        int gridBottom = height - padding;
+        int gridBottom = height -7* padding;
         int gridLeft = padding;
         int gridRight = width - padding;
         int totalHeight = gridBottom - gridTop;
@@ -98,11 +68,11 @@ public class MyCanvas extends View {
         int colWidth = (totalWidth - 8 * colSpacing) / 7;
         int rowSpacing = (totalHeight - 7 * colWidth) / 6;
         int radius = colWidth / 3;
-        int n = 0, m = 1, x;
+        int n, i;
         int circleY, circleX;
-        int circX;
-        int changeCol = 0;
-        int xPos = 1000, yPos = 1080;
+        int circX, circY;
+        int pCol = 1;
+
 
         Log.e(TAG, "Right" + String.valueOf(gridRight));
         Log.e(TAG, "Left" + String.valueOf(gridLeft));
@@ -114,54 +84,58 @@ public class MyCanvas extends View {
         //draw grid
         canvas.drawRect(gridLeft, gridTop, gridRight, gridBottom, paintRect);
         //draw circles
-        for (int i = 0; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                while (n <= 6) {
-                    for (m = 0; m < 6; m++) {
-                        circleX = gridLeft + colSpacing + radius + n * (colWidth + colSpacing);
-                        circleY = gridBottom - colSpacing - radius - m * (colWidth + rowSpacing);
-                        canvas.drawCircle(circleX, circleY, radius, paintCircle);
-                        {
-                            arrX[i][j] = circleX;
-                            arrY[i][j] = circleY;
+                //assigning colour to the matrix value so that it can be printed
+                circleX = gridLeft + colSpacing + radius + j * (colWidth + colSpacing);
+                circleY = gridBottom - colSpacing - radius - i * (colWidth + rowSpacing);
+                if (drawToken.getValue(i, j) == 1) {
+                    paintCircle.setColor(Color.GREEN);
+                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
+                } else if (drawToken.getValue(i, j) == 2) {
+                    paintCircle.setColor(Color.RED);
+                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
+                } else {
+                    paintCircle.setColor(Color.WHITE);
+                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
+                }
+            }
+        }
+
+            if (touched) {
+                count++;
+                if (count % 2 == 0) {
+                    pCol = 2;
+                } else {
+                    pCol = 1;
+                }
+                if( //undo button is clicked//
+                ){
+                    undoClick = 1;
+                }
+
+                for (n = 0; n < 7; n++) {
+                    circX = gridLeft + colSpacing + colWidth + n * (colWidth + colSpacing);
+                    if (tokenX < circX) {
+                        //the matrix should hold a 1 int the position of the token
+                        drawToken.setTokenColour(n , pCol, undoClick);
+                        if ( /*(button onClickListener==TRUE))*/)
+                            drawToken.undoBtn( n-1);
+                            paintCircle.setColor(Color.WHITE);
+                            circY= gridBottom - colSpacing - radius - m * (colWidth + rowSpacing);
+                        { canvas.drawCircle( circX, circY, radius, paintCircle );}
+                        count--;
+                        if (count % 2 == 0) {
+                            pCol = 2;
+                        } else {
+                            pCol = 1;
                         }
-                        ;
-                        n++;
                     }
                 }
             }
 
 
-            if (touched) {
-                if (1 == changeCol % 2) {
-                    paintCircle.setColor(Color.BLUE);
-                } else {
-                    paintCircle.setColor(Color.GREEN);
-                }
-                circX = 10;
-                for (n = 1; n <= 6; n++)
-                    circX = gridLeft + colSpacing + colWidth + n * (colWidth + colSpacing);
-                if (xPos < circX) {
-                    canvas.drawCircle(circX, gridTop + radius, radius, paintCircle);
-                    changeCol++;
-                    count++;
-                    invalidate();
-                }
-            }
-
-        }
-        while (count != 0) {
-            for (int i = 0; i <= 7; i++) {
-                for (int j = 0; j <= 6; j++) {
-                    x = cood.first[i][j];
-                    y = cood.second[i][j];
-                    canvas.drawCircle(x, y, radius, paintCircle);
-                }
-
-            }
-            count--;
         }
     }
-}
 
-
+    
