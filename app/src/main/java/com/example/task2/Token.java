@@ -1,21 +1,36 @@
 package com.example.task2;
-
 import android.util.Log;
+import android.util.Pair;
+
+import java.util.ArrayList;
 
 public class Token {
     int[][] token = new int[6][7];
-    int [] row= {5,5,5,5,5,5,5};
-    int sum=0;
-    int x=0;
-    public static final String TAG = "message" ;
-    public void setTokenColour ( int coloumn, int colour){
-        int y = row[coloumn];
-        Log.e(TAG, String.valueOf(y));
-        token[y][coloumn]= colour;
-        row[coloumn]= y--;
-        Log.e(TAG, String.valueOf(y));
+    int[] row = {0, 0, 0, 0, 0, 0, 0};
+    int sum = 0;
+    int x = 0;
+    int count=0;
+    public static final String TAG = "message";
+    public void init(){
 
     }
+
+    public int setTokenColour(int coloumn, int colour) {
+        int y = row[coloumn];
+        Log.e(TAG, "input coloumn" + String.valueOf(coloumn));
+        Log.e(TAG, "input row" + String.valueOf(y));
+        //giving 0/1/2 for the elements in the matrix corresponding to the colour of the circle
+        token[y][coloumn] = colour;
+        row[coloumn] = y++;
+        Log.e(TAG, "incremented row" + String.valueOf(y));
+        Log.e(TAG, "input coloumn" + String.valueOf(row[coloumn]));
+        return (y-1);
+
+    }
+public void undoBtn( int lastRow, int lastColoumn) {
+    token[lastRow][lastColoumn] = 0;
+}
+
     public int gameEnd( int playerNum){
                 return playerNum;
     }
@@ -25,7 +40,7 @@ public class Token {
         return x;
     }
 
-    public void undoBtn(  int coloumn, int undoClick) {
+    public void undoBtn(  int coloumn) {
         row[coloumn] +=1;
         int y=row[coloumn];
         token [y][coloumn]=0;

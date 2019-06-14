@@ -52,6 +52,7 @@ public class PlayerColour extends AppCompatActivity {
                      greenBtn.setVisibility(View.INVISIBLE);
                      blueBtn.setVisibility(View.INVISIBLE);
                  }
+                 whiteBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_colour));
             }
         });
         blueBtn.setOnClickListener(new View.OnClickListener() {

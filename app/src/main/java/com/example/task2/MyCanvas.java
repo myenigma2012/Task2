@@ -16,13 +16,10 @@ public class MyCanvas extends View {
     int height;
     int width;
     int count = 0;
-    int x = 0;
-    int y = 0;
+
     boolean touched;
     float tokenX = 90, tokenY = 90;
     private static final String TAG = "message";
-    Pair<Integer, Integer>[] coord = new Pair[42];
-
 
     public MyCanvas(Context context, AttributeSet attrs, int screenHeight, int screenWidth) {
         super(context, attrs);
@@ -59,7 +56,7 @@ public class MyCanvas extends View {
         //outline for grid
         int padding = 30;
         int gridTop = height / 3;
-        int gridBottom = height -7* padding;
+        int gridBottom = height - 7 * padding;
         int gridLeft = padding;
         int gridRight = width - padding;
         int totalHeight = gridBottom - gridTop;
@@ -69,6 +66,8 @@ public class MyCanvas extends View {
         int rowSpacing = (totalHeight - 7 * colWidth) / 6;
         int radius = colWidth / 3;
         int n, i;
+        int x = 0, y = 0;
+        int lastRow =0, lastColoumn=0;
         int circleY, circleX;
         int circX, circY;
         int pCol = 1;
@@ -91,51 +90,38 @@ public class MyCanvas extends View {
                 circleY = gridBottom - colSpacing - radius - i * (colWidth + rowSpacing);
                 if (drawToken.getValue(i, j) == 1) {
                     paintCircle.setColor(Color.GREEN);
-                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
                 } else if (drawToken.getValue(i, j) == 2) {
                     paintCircle.setColor(Color.RED);
-                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
                 } else {
                     paintCircle.setColor(Color.WHITE);
-                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
                 }
+                canvas.drawCircle(circleX, circleY, radius, paintCircle);
             }
         }
 
-            if (touched) {
-                count++;
-                if (count % 2 == 0) {
-                    pCol = 2;
-                } else {
-                    pCol = 1;
-                }
-                if( //undo button is clicked//
-                ){
-                    undoClick = 1;
-                }
-
-                for (n = 0; n < 7; n++) {
-                    circX = gridLeft + colSpacing + colWidth + n * (colWidth + colSpacing);
-                    if (tokenX < circX) {
-                        //the matrix should hold a 1 int the position of the token
-                        drawToken.setTokenColour(n , pCol, undoClick);
-                        if ( /*(button onClickListener==TRUE))*/)
-                            drawToken.undoBtn( n-1);
-                            paintCircle.setColor(Color.WHITE);
-                            circY= gridBottom - colSpacing - radius - m * (colWidth + rowSpacing);
-                        { canvas.drawCircle( circX, circY, radius, paintCircle );}
-                        count--;
-                        if (count % 2 == 0) {
-                            pCol = 2;
-                        } else {
-                            pCol = 1;
-                        }
-                    }
-                }
+        if (touched) {
+            count++;
+            if (count % 2 == 0) {
+                pCol = 2;
+            } else {
+                pCol = 1;
             }
 
+            for (n = 0; n < 7; n++) {
+                circX = gridLeft + colSpacing + colWidth + n * (colWidth + colSpacing);
+                if (tokenX < circX) {
+                    //the matrix should hold an int the position of the token
+                    lastRow = drawToken.setTokenColour( n, pCol);
+                    lastColoumn = n;
+                }
+            }
+            //the undo button
+            if (onTouchUNDO == TRUE){
+                drawToken.undoBtn( lastRow, lastColoumn );
+                // to change the player
+                count -= 1;
+            }
 
         }
     }
-
-    
+}
