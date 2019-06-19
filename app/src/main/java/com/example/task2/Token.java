@@ -21,11 +21,10 @@ public class Token {
         Log.e(TAG, "input row" + String.valueOf(y));
         //giving 0/1/2 for the elements in the matrix corresponding to the colour of the circle
         token[y][coloumn] = colour;
-        row[coloumn] = y++;
+        row[coloumn]++;
         Log.e(TAG, "incremented row" + String.valueOf(y));
         Log.e(TAG, "input coloumn" + String.valueOf(row[coloumn]));
         return (y-1);
-
     }
 public void undoBtn( int lastRow, int lastColoumn) {
     token[lastRow][lastColoumn] = 0;
@@ -41,9 +40,9 @@ public void undoBtn( int lastRow, int lastColoumn) {
     }
 
     public void undoBtn(  int coloumn) {
-        row[coloumn] +=1;
         int y=row[coloumn];
         token [y][coloumn]=0;
+        row[coloumn] -=1;
 
     }
 
@@ -60,11 +59,6 @@ public void undoBtn( int lastRow, int lastColoumn) {
                     } else if (sum == 8) {
                         value.gameEnd(2);
                     }
-                    if (sum == 12) {
-                        value.gameEnd(3);
-                    } else if (sum == 16) {
-                        value.gameEnd(4);
-                    }
                 }
             }
         }
@@ -79,27 +73,17 @@ public void undoBtn( int lastRow, int lastColoumn) {
                     } else if (sum == 8) {
                         value.gameEnd(2);
                     }
-                    if (sum == 12) {
-                        value.gameEnd(3);
-                    } else if (sum == 16) {
-                        value.gameEnd(4);
-                    }
                 }
             }
         }
         //to check if game ended diagonally
-        for (int i = 0; i < 4; i++) {
-            for (int j = 3; j >= 0; j--) {
+        for (int i = 3; i < 6; i++) {
+            for (int j = 0; j <4; j++) {
                 sum = sum + value.getValue(i, j);
                 if (sum == 4) {
                     value.gameEnd(1);
                 } else if (sum == 8) {
                     value.gameEnd(2);
-                }
-                if (sum == 12) {
-                    value.gameEnd(3);
-                } else if (sum == 16) {
-                    value.gameEnd(4);
                 }
             }
         }
@@ -112,11 +96,6 @@ public void undoBtn( int lastRow, int lastColoumn) {
                         value.gameEnd(1);
                     } else if (sum == 8) {
                         value.gameEnd(2);
-                    }
-                    if (sum == 12) {
-                        value.gameEnd(3);
-                    } else if (sum == 16) {
-                        value.gameEnd(4);
                     }
                 }
             }

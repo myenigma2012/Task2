@@ -9,19 +9,20 @@ import android.util.Pair;
 import android.view.View;
 import android.view.MotionEvent;
 import static android.view.MotionEvent.*;
+import static java.lang.Boolean.TRUE;
 
 public class MyCanvas extends View {
     Paint paintRect, paintCircle;
     Token drawToken;
     int height;
     int width;
+    int p1Col, p2Col;
     int count = 0;
-
-    boolean touched;
+    boolean touched, undoPress;
     float tokenX = 90, tokenY = 90;
     private static final String TAG = "message";
 
-    public MyCanvas(Context context, AttributeSet attrs, int screenHeight, int screenWidth) {
+    public MyCanvas(Context context, AttributeSet attrs, int screenHeight, int screenWidth, int player1Col, int player2Col, boolean undo) {
         super(context, attrs);
         //space for token
         paintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -36,11 +37,15 @@ public class MyCanvas extends View {
         height = screenHeight;
         width = screenWidth;
         drawToken = new Token();
+        p1Col = player1Col;
+        p2Col = player2Col;
+        undoPress = undo;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         touched = true;
+        //different screens have diff. sizes and we have to take care. canvas wookes on pix, others wokr on dp,sp.
         //getting the touched x and y position
         float xPos = event.getX();
         float yPos = event.getY();
@@ -69,7 +74,7 @@ public class MyCanvas extends View {
         int x = 0, y = 0;
         int lastRow =0, lastColoumn=0;
         int circleY, circleX;
-        int circX, circY;
+        int circX;
         int pCol = 1;
 
 
@@ -89,9 +94,10 @@ public class MyCanvas extends View {
                 circleX = gridLeft + colSpacing + radius + j * (colWidth + colSpacing);
                 circleY = gridBottom - colSpacing - radius - i * (colWidth + rowSpacing);
                 if (drawToken.getValue(i, j) == 1) {
-                    paintCircle.setColor(Color.GREEN);
+                    //p1Col and p2Col are always blue whyyyyy???
+                    paintCircle.setColor(p1Col);
                 } else if (drawToken.getValue(i, j) == 2) {
-                    paintCircle.setColor(Color.RED);
+                    paintCircle.setColor(p2Col);
                 } else {
                     paintCircle.setColor(Color.WHITE);
                 }
@@ -113,15 +119,16 @@ public class MyCanvas extends View {
                     //the matrix should hold an int the position of the token
                     lastRow = drawToken.setTokenColour( n, pCol);
                     lastColoumn = n;
+                    // loop should stop when if becomes true for the first time
+                    break;
                 }
             }
             //the undo button
-            if (onTouchUNDO == TRUE){
+            if (undoPress == TRUE){
                 drawToken.undoBtn( lastRow, lastColoumn );
                 // to change the player
                 count -= 1;
             }
-
         }
     }
 }

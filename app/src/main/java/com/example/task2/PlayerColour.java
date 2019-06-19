@@ -24,7 +24,7 @@ public class PlayerColour extends AppCompatActivity {
         Intent intename =getIntent();
         final int playerNum = (int) intename.getIntExtra("player",0 );
 
-    final Button whiteBtn =(Button) findViewById(R.id.wBtn);
+    final Button orangeBtn =(Button) findViewById(R.id.oBtn);
     final Button greenBtn =(Button) findViewById(R.id.gBtn);
     final Button blueBtn =(Button) findViewById(R.id.bBtn);
     final Button redBtn =(Button) findViewById(R.id.rBtn);
@@ -34,34 +34,33 @@ public class PlayerColour extends AppCompatActivity {
         playBtn.setVisibility(View.GONE);
 
 
-         whiteBtn.setOnClickListener(new View.OnClickListener(){
+         orangeBtn.setOnClickListener(new View.OnClickListener(){
              public void onClick (View v){
                 if (n == 1){
-                     p1colour = 1;
+                     p1colour = 0xFF9800;
                 }
                 else {
-                     p2colour = 1;
+                     p2colour =0xFF9800;
                 }
                 n++;
                 if ( playerNum ==2){
                 name.setText("Player 2");}
-                whiteBtn.setVisibility(v.INVISIBLE);
+                orangeBtn.setVisibility(v.INVISIBLE);
                  if (n>2){
                      playBtn.setVisibility(View.VISIBLE);
                      redBtn.setVisibility(View.INVISIBLE);
                      greenBtn.setVisibility(View.INVISIBLE);
                      blueBtn.setVisibility(View.INVISIBLE);
                  }
-                 whiteBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_colour));
             }
         });
         blueBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                     p1colour = 2;
+                     p1colour = 0x008080;
                 }
                 else {
-                     p2colour = 2;
+                     p2colour = 0x008080;
                 }
                 n++;
                 if ( playerNum ==2){
@@ -69,7 +68,7 @@ public class PlayerColour extends AppCompatActivity {
                 blueBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
-                    whiteBtn.setVisibility(View.INVISIBLE);
+                    orangeBtn.setVisibility(View.INVISIBLE);
                     greenBtn.setVisibility(View.INVISIBLE);
                     redBtn.setVisibility(View.INVISIBLE);
                 }
@@ -78,10 +77,10 @@ public class PlayerColour extends AppCompatActivity {
         greenBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                    p1colour = 3;
+                    p1colour = 0x228B22;
                 }
                 else {
-                    p2colour = 3;
+                    p2colour = 0x228B22;
                 }
                 n++;
                 if ( playerNum ==2){
@@ -89,7 +88,7 @@ public class PlayerColour extends AppCompatActivity {
                 greenBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
-                    whiteBtn.setVisibility(View.INVISIBLE);
+                    orangeBtn.setVisibility(View.INVISIBLE);
                     redBtn.setVisibility(View.INVISIBLE);
                     blueBtn.setVisibility(View.INVISIBLE);
                 }
@@ -99,10 +98,10 @@ public class PlayerColour extends AppCompatActivity {
         redBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 if (n == 1){
-                    p1colour = 4;
+                    p1colour = 0xFF0000;
                 }
                 else {
-                    p2colour = 4;
+                    p2colour = 0xFF0000;
                 }
                 n++;
                 if ( playerNum ==2){
@@ -110,7 +109,7 @@ public class PlayerColour extends AppCompatActivity {
                 redBtn.setVisibility(v.INVISIBLE);
                 if (n>2){
                     playBtn.setVisibility(View.VISIBLE);
-                    whiteBtn.setVisibility(View.INVISIBLE);
+                    orangeBtn.setVisibility(View.INVISIBLE);
                     greenBtn.setVisibility(View.INVISIBLE);
                     blueBtn.setVisibility(View.INVISIBLE);
                 }
