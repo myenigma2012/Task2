@@ -40,6 +40,8 @@ public class homeScreen extends AppCompatActivity {
         setContentView(myCanvas);
         Log.e(TAG, "height" + String.valueOf(size.y));
         Log.e(TAG, "width" + String.valueOf(size.x));
+        Log.e ( TAG, "player1 color" + String.valueOf(p1Col));
+        Log.e ( TAG, "player2 color" + String.valueOf(p2Col));
         }
 
     // handle button activities

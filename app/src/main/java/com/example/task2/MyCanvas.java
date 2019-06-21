@@ -8,6 +8,9 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.MotionEvent;
+
+import java.util.ArrayList;
+
 import static android.view.MotionEvent.*;
 import static java.lang.Boolean.TRUE;
 
@@ -21,7 +24,8 @@ public class MyCanvas extends View {
     boolean touched, undoPress;
     float tokenX = 90, tokenY = 90;
     private static final String TAG = "message";
-
+    ArrayList<Integer> lastColoumn = new ArrayList<Integer>();
+    ArrayList<Integer> lastRow = new ArrayList<Integer>();
     public MyCanvas(Context context, AttributeSet attrs, int screenHeight, int screenWidth, int player1Col, int player2Col, boolean undo) {
         super(context, attrs);
         //space for token
@@ -71,8 +75,7 @@ public class MyCanvas extends View {
         int rowSpacing = (totalHeight - 7 * colWidth) / 6;
         int radius = colWidth / 3;
         int n, i;
-        int x = 0, y = 0;
-        int lastRow =0, lastColoumn=0;
+        int row=0;
         int circleY, circleX;
         int circX;
         int pCol = 1;
@@ -80,8 +83,6 @@ public class MyCanvas extends View {
 
         Log.e(TAG, "Right" + String.valueOf(gridRight));
         Log.e(TAG, "Left" + String.valueOf(gridLeft));
-        Log.e(TAG, "Top" + String.valueOf(gridTop));
-        Log.e(TAG, "Bottom" + String.valueOf(gridBottom));
 
         // bg colour
         canvas.drawColor(Color.MAGENTA);
@@ -93,15 +94,31 @@ public class MyCanvas extends View {
                 //assigning colour to the matrix value so that it can be printed
                 circleX = gridLeft + colSpacing + radius + j * (colWidth + colSpacing);
                 circleY = gridBottom - colSpacing - radius - i * (colWidth + rowSpacing);
+
                 if (drawToken.getValue(i, j) == 1) {
-                    //p1Col and p2Col are always blue whyyyyy???
                     paintCircle.setColor(p1Col);
+                    //animate the circle
+                    if( i == lastRow.get( lastRow.size()-1) && j== lastColoumn.get( lastColoumn.size()-1)){
+                        canvas.drawCircle(circleX, gridTop-4*radius, radius, paintCircle);
+                        canvas.translate(0, circleY-gridTop-4*radius );
+                    }
+                    else {
+                        canvas.drawCircle(circleX, circleY, radius, paintCircle);
+                    }
                 } else if (drawToken.getValue(i, j) == 2) {
                     paintCircle.setColor(p2Col);
+                    if( i == lastRow.get( lastRow.size()-1) && j== lastColoumn.get( lastColoumn.size()-1)) {
+                        canvas.drawCircle(circleX, gridTop-4*radius, radius, paintCircle);
+                        canvas.translate(0, circleY-gridTop-4*radius );
+                    }
+                    else{
+                        canvas.drawCircle(circleX, circleY, radius, paintCircle);
+                    }
                 } else {
                     paintCircle.setColor(Color.WHITE);
+                    canvas.drawCircle(circleX, circleY, radius, paintCircle);
                 }
-                canvas.drawCircle(circleX, circleY, radius, paintCircle);
+
             }
         }
 
@@ -112,23 +129,25 @@ public class MyCanvas extends View {
             } else {
                 pCol = 1;
             }
-
             for (n = 0; n < 7; n++) {
                 circX = gridLeft + colSpacing + colWidth + n * (colWidth + colSpacing);
                 if (tokenX < circX) {
                     //the matrix should hold an int the position of the token
-                    lastRow = drawToken.setTokenColour( n, pCol);
-                    lastColoumn = n;
+                    row = drawToken.setTokenColour(n, pCol);
+                    // the undo button should be able to undo the value of the token in the matrix to 0
+                    lastRow.add(row);
+                    lastColoumn.add(n);
                     // loop should stop when if becomes true for the first time
                     break;
                 }
             }
+        }
             //the undo button
             if (undoPress == TRUE){
-                drawToken.undoBtn( lastRow, lastColoumn );
+                drawToken.undoBtn( lastRow.get(lastRow.size() -1), lastColoumn.get(lastColoumn.size()-1) );
                 // to change the player
                 count -= 1;
             }
         }
     }
-}
+

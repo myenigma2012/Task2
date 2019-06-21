@@ -1,9 +1,5 @@
 package com.example.task2;
 import android.util.Log;
-import android.util.Pair;
-
-import java.util.ArrayList;
-
 public class Token {
     int[][] token = new int[6][7];
     int[] row = {0, 0, 0, 0, 0, 0, 0};
@@ -11,9 +7,7 @@ public class Token {
     int x = 0;
     int count=0;
     public static final String TAG = "message";
-    public void init(){
 
-    }
 
     public int setTokenColour(int coloumn, int colour) {
         int y = row[coloumn];
@@ -28,6 +22,7 @@ public class Token {
     }
 public void undoBtn( int lastRow, int lastColoumn) {
     token[lastRow][lastColoumn] = 0;
+
 }
 
     public int gameEnd( int playerNum){
@@ -55,9 +50,9 @@ public void undoBtn( int lastRow, int lastColoumn) {
                     x = value.getValue(i, j);
                     sum = sum + x;
                     if (sum == 4) {
-                        value.gameEnd(1);
+                        value.gameEnd(1); break;
                     } else if (sum == 8) {
-                        value.gameEnd(2);
+                        value.gameEnd(2); break;
                     }
                 }
             }
@@ -70,8 +65,9 @@ public void undoBtn( int lastRow, int lastColoumn) {
                     sum = sum + x;
                     if (sum == 4) {
                         value.gameEnd(1);
+                        break;
                     } else if (sum == 8) {
-                        value.gameEnd(2);
+                        value.gameEnd(2); break;
                     }
                 }
             }
@@ -81,9 +77,9 @@ public void undoBtn( int lastRow, int lastColoumn) {
             for (int j = 0; j <4; j++) {
                 sum = sum + value.getValue(i, j);
                 if (sum == 4) {
-                    value.gameEnd(1);
+                    value.gameEnd(1); break;
                 } else if (sum == 8) {
-                    value.gameEnd(2);
+                    value.gameEnd(2); break;
                 }
             }
         }
@@ -93,13 +89,14 @@ public void undoBtn( int lastRow, int lastColoumn) {
                 for (int j = 4; j >= 0; j--) {
                     sum = sum + value.getValue(i, j);
                     if (sum == 4) {
-                        value.gameEnd(1);
+                        value.gameEnd(1);break;
                     } else if (sum == 8) {
-                        value.gameEnd(2);
+                        value.gameEnd(2);break;
                     }
                 }
             }
         }
+
     }
     }
 
